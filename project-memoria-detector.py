@@ -539,20 +539,24 @@ def ftpv4_probe(dst_host, dst_port, interface, use_fw, timeout):
 
                 # CMX-TCP/IP
                 elif re.search(b'^220 CMX TCP/IP - REMOTE FTP Server \(version \w.+\) ready', pkt[Raw].load, re.IGNORECASE) is not None:
-                    stack_name_http = 'CMX-TCP/IP'
-                    match_http = MATCH_HIGH
+                    stack_name_ftp = 'CMX-TCP/IP'
+                    match_ftp = MATCH_HIGH
                     break
 
                 # emNet
                 elif re.search(b'^220 Welcome to embOS/IP FTP server', pkt[Raw].load, re.IGNORECASE) is not None:
-                    stack_name_http = 'emNet'
-                    match_http = MATCH_HIGH
+                    stack_name_ftp = 'emNet'
+                    match_ftp = MATCH_HIGH
                     break
 
                 # Keil TCPnet
                 elif re.search(b'^220 Keil FTP server', pkt[Raw].load, re.IGNORECASE) is not None:
-                    stack_name_http = 'Keil TCPnet'
-                    match_http = MATCH_HIGH
+                    stack_name_ftp = 'Keil TCPnet'
+                    match_ftp = MATCH_HIGH
+                    break
+                elif re.search(b'Welcome to InterNiche embFtp Server', pkt[Raw].load, re.IGNORECASE) is not None:
+                    stack_name_ftp = 'NicheStack'
+                    match_ftp = MATCH_HIGH
                     break
 
     except Exception as ex:
